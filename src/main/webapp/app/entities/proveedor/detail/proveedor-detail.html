@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (proveedor(); as proveedorRef) {
+      <div>
+        <h2 data-cy="proveedorDetailsHeading"><span jhiTranslate="oncallApp.proveedor.detail.title">Proveedor</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ proveedorRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.proveedor.nombre">Nombre</span></dt>
+          <dd>
+            <span>{{ proveedorRef.nombre }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.proveedor.tipo">Tipo</span></dt>
+          <dd>
+            <span [jhiTranslate]="'oncallApp.TipoProveedor.' + (proveedorRef.tipo ?? 'null')">{{
+              { null: '', NUBE: 'NUBE', PAGOS: 'PAGOS', CORREO: 'CORREO', CDN: 'CDN', OBSERVABILIDAD: 'OBSERVABILIDAD', OTRO: 'OTRO' }[
+                proveedorRef.tipo ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.proveedor.zonaHoraria">Zona Horaria</span></dt>
+          <dd>
+            <span>{{ proveedorRef.zonaHoraria }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.proveedor.telefonoContacto">Telefono Contacto</span></dt>
+          <dd>
+            <span>{{ proveedorRef.telefonoContacto }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.proveedor.emailContacto">Email Contacto</span></dt>
+          <dd>
+            <span>{{ proveedorRef.emailContacto }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.proveedor.urlSoporte">Url Soporte</span></dt>
+          <dd>
+            <span>{{ proveedorRef.urlSoporte }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.proveedor.urlEstado">Url Estado</span></dt>
+          <dd>
+            <span>{{ proveedorRef.urlEstado }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.proveedor.cobertura">Cobertura</span></dt>
+          <dd>
+            <span [jhiTranslate]="'oncallApp.CoberturaProveedor.' + (proveedorRef.cobertura ?? 'null')">{{
+              { null: '', VEINTICUATRO_SIETE: 'VEINTICUATRO_SIETE', HORARIO_HABIL: 'HORARIO_HABIL', SOLO_CRITICO: 'SOLO_CRITICO' }[
+                proveedorRef.cobertura ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.proveedor.slaRespuestaMinutos">Sla Respuesta Minutos</span></dt>
+          <dd>
+            <span>{{ proveedorRef.slaRespuestaMinutos }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.proveedor.activo">Activo</span></dt>
+          <dd>
+            <span>{{ proveedorRef.activo }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/proveedor', proveedorRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

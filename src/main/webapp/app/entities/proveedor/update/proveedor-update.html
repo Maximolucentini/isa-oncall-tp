@@ -1,0 +1,243 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-proveedor-heading" data-cy="ProveedorCreateUpdateHeading" jhiTranslate="oncallApp.proveedor.home.createOrEditLabel">
+        Crear o editar Proveedor
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nombreRef = editForm.get('nombre')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_nombre" jhiTranslate="oncallApp.proveedor.nombre">Nombre</label>
+          <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
+          @if (nombreRef.invalid && (nombreRef.dirty || nombreRef.touched)) {
+            <div>
+              @if (nombreRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (nombreRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >Este campo no puede superar más de 100 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let tipoRef = editForm.get('tipo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_tipo" jhiTranslate="oncallApp.proveedor.tipo">Tipo</label>
+          <select class="form-control" name="tipo" formControlName="tipo" id="field_tipo" data-cy="tipo">
+            <option [ngValue]="null">{{ 'oncallApp.TipoProveedor.null' | translate }}</option>
+            @for (tipoProveedor of tipoProveedorValues; track $index) {
+              <option [value]="tipoProveedor">{{ 'oncallApp.TipoProveedor.' + tipoProveedor | translate }}</option>
+            }
+          </select>
+          @if (tipoRef.invalid && (tipoRef.dirty || tipoRef.touched)) {
+            <div>
+              @if (tipoRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let zonaHorariaRef = editForm.get('zonaHoraria')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_zonaHoraria" jhiTranslate="oncallApp.proveedor.zonaHoraria">Zona Horaria</label>
+          <input
+            type="text"
+            class="form-control"
+            name="zonaHoraria"
+            id="field_zonaHoraria"
+            data-cy="zonaHoraria"
+            formControlName="zonaHoraria"
+          />
+          @if (zonaHorariaRef.invalid && (zonaHorariaRef.dirty || zonaHorariaRef.touched)) {
+            <div>
+              @if (zonaHorariaRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (zonaHorariaRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >Este campo no puede superar más de 60 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let telefonoContactoRef = editForm.get('telefonoContacto')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_telefonoContacto" jhiTranslate="oncallApp.proveedor.telefonoContacto"
+            >Telefono Contacto</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="telefonoContacto"
+            id="field_telefonoContacto"
+            data-cy="telefonoContacto"
+            formControlName="telefonoContacto"
+          />
+          @if (telefonoContactoRef.invalid && (telefonoContactoRef.dirty || telefonoContactoRef.touched)) {
+            <div>
+              @if (telefonoContactoRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '40' }"
+                  >Este campo no puede superar más de 40 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let emailContactoRef = editForm.get('emailContacto')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_emailContacto" jhiTranslate="oncallApp.proveedor.emailContacto">Email Contacto</label>
+          <input
+            type="text"
+            class="form-control"
+            name="emailContacto"
+            id="field_emailContacto"
+            data-cy="emailContacto"
+            formControlName="emailContacto"
+          />
+          @if (emailContactoRef.invalid && (emailContactoRef.dirty || emailContactoRef.touched)) {
+            <div>
+              @if (emailContactoRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '120' }"
+                  >Este campo no puede superar más de 120 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let urlSoporteRef = editForm.get('urlSoporte')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_urlSoporte" jhiTranslate="oncallApp.proveedor.urlSoporte">Url Soporte</label>
+          <input
+            type="text"
+            class="form-control"
+            name="urlSoporte"
+            id="field_urlSoporte"
+            data-cy="urlSoporte"
+            formControlName="urlSoporte"
+          />
+          @if (urlSoporteRef.invalid && (urlSoporteRef.dirty || urlSoporteRef.touched)) {
+            <div>
+              @if (urlSoporteRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '500' }"
+                  >Este campo no puede superar más de 500 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let urlEstadoRef = editForm.get('urlEstado')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_urlEstado" jhiTranslate="oncallApp.proveedor.urlEstado">Url Estado</label>
+          <input type="text" class="form-control" name="urlEstado" id="field_urlEstado" data-cy="urlEstado" formControlName="urlEstado" />
+          @if (urlEstadoRef.invalid && (urlEstadoRef.dirty || urlEstadoRef.touched)) {
+            <div>
+              @if (urlEstadoRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '500' }"
+                  >Este campo no puede superar más de 500 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let coberturaRef = editForm.get('cobertura')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_cobertura" jhiTranslate="oncallApp.proveedor.cobertura">Cobertura</label>
+          <select class="form-control" name="cobertura" formControlName="cobertura" id="field_cobertura" data-cy="cobertura">
+            <option [ngValue]="null">{{ 'oncallApp.CoberturaProveedor.null' | translate }}</option>
+            @for (coberturaProveedor of coberturaProveedorValues; track $index) {
+              <option [value]="coberturaProveedor">{{ 'oncallApp.CoberturaProveedor.' + coberturaProveedor | translate }}</option>
+            }
+          </select>
+          @if (coberturaRef.invalid && (coberturaRef.dirty || coberturaRef.touched)) {
+            <div>
+              @if (coberturaRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let slaRespuestaMinutosRef = editForm.get('slaRespuestaMinutos')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_slaRespuestaMinutos" jhiTranslate="oncallApp.proveedor.slaRespuestaMinutos"
+            >Sla Respuesta Minutos</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="slaRespuestaMinutos"
+            id="field_slaRespuestaMinutos"
+            data-cy="slaRespuestaMinutos"
+            formControlName="slaRespuestaMinutos"
+          />
+          @if (slaRespuestaMinutosRef.invalid && (slaRespuestaMinutosRef.dirty || slaRespuestaMinutosRef.touched)) {
+            <div>
+              @if (slaRespuestaMinutosRef.errors?.min) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.min" [translateValues]="{ min: '1' }"
+                  >Este campo debe ser mayor que 1.</small
+                >
+              }
+              @if (slaRespuestaMinutosRef.errors?.max) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.max" [translateValues]="{ max: '10080' }"
+                  >Este campo no puede ser mayor que 10080.</small
+                >
+              }
+              <small class="form-text text-danger" [hidden]="!slaRespuestaMinutosRef.errors?.number" jhiTranslate="entity.validation.number"
+                >Este campo debe ser un número.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let activoRef = editForm.get('activo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_activo" jhiTranslate="oncallApp.proveedor.activo">Activo</label>
+          <input type="checkbox" class="form-check" name="activo" id="field_activo" data-cy="activo" formControlName="activo" />
+          @if (activoRef.invalid && (activoRef.dirty || activoRef.touched)) {
+            <div>
+              @if (activoRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

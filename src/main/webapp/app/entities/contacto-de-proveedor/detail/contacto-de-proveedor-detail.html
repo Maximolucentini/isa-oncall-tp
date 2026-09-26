@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (contactoDeProveedor(); as contactoDeProveedorRef) {
+      <div>
+        <h2 data-cy="contactoDeProveedorDetailsHeading">
+          <span jhiTranslate="oncallApp.contactoDeProveedor.detail.title">Contacto De Proveedor</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ contactoDeProveedorRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.contactoDeProveedor.nombre">Nombre</span></dt>
+          <dd>
+            <span>{{ contactoDeProveedorRef.nombre }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.contactoDeProveedor.email">Email</span></dt>
+          <dd>
+            <span>{{ contactoDeProveedorRef.email }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.contactoDeProveedor.telefono">Telefono</span></dt>
+          <dd>
+            <span>{{ contactoDeProveedorRef.telefono }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.contactoDeProveedor.rol">Rol</span></dt>
+          <dd>
+            <span>{{ contactoDeProveedorRef.rol }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.contactoDeProveedor.activo">Activo</span></dt>
+          <dd>
+            <span>{{ contactoDeProveedorRef.activo }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.contactoDeProveedor.proveedor">Proveedor</span></dt>
+          <dd>
+            @if (contactoDeProveedor()!.proveedor) {
+              <div>
+                <a [routerLink]="['/proveedor', contactoDeProveedor()!.proveedor?.id, 'view']">{{
+                  contactoDeProveedorRef.proveedor?.nombre
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/contacto-de-proveedor', contactoDeProveedorRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

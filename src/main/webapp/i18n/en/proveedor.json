@@ -1,0 +1,35 @@
+{
+  "oncallApp": {
+    "proveedor": {
+      "home": {
+        "title": "Proveedors",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Proveedor",
+        "createOrEditLabel": "Create or edit a Proveedor",
+        "notFound": "No Proveedors found"
+      },
+      "created": "A new Proveedor is created with identifier {{ param }}",
+      "updated": "A Proveedor is updated with identifier {{ param }}",
+      "deleted": "A Proveedor is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Proveedor {{ id }}?"
+      },
+      "detail": {
+        "title": "Proveedor"
+      },
+      "id": "ID",
+      "nombre": "Nombre",
+      "tipo": "Tipo",
+      "zonaHoraria": "Zona Horaria",
+      "telefonoContacto": "Telefono Contacto",
+      "emailContacto": "Email Contacto",
+      "urlSoporte": "Url Soporte",
+      "urlEstado": "Url Estado",
+      "cobertura": "Cobertura",
+      "slaRespuestaMinutos": "Sla Respuesta Minutos",
+      "activo": "Activo",
+      "servicio": "Servicio",
+      "contacto": "Contacto"
+    }
+  }
+}

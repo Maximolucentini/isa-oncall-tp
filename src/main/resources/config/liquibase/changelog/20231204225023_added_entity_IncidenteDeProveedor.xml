@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity IncidenteDeProveedor.
+    -->
+    <changeSet id="20231204225023-1" author="jhipster">
+        <createTable tableName="incidente_de_proveedor" remarks="Ticket del lado del proveedor. Puede nacer sin incidente propio:\nuna degradacion detectada que todavia no nos afecto.\nLos campos *Resuelto congelan lo que respondio la regla C al abrirlo.">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_externo" type="varchar(100)">
+                <constraints nullable="true" />
+            </column>
+            <column name="estado" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="abierto_en" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="primera_respuesta_en" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="resuelto_en" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="cumplio_sla" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="motivo_rechazo" type="varchar(1000)">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsable_resuelto" type="varchar(100)">
+                <constraints nullable="true" />
+            </column>
+            <column name="nivel_resuelto" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="hubo_cobertura" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="notas" type="varchar(4000)">
+                <constraints nullable="true" />
+            </column>
+            <column name="incidente_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="servicio_de_proveedor_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="abierto_por_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="incidente_de_proveedor" columnName="abierto_en" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="incidente_de_proveedor" columnName="primera_respuesta_en" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="incidente_de_proveedor" columnName="resuelto_en" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20231204225023-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="../fake-data/incidente_de_proveedor.csv"
+                  relativeToChangelogFile="true"
+                  separator=";"
+                  tableName="incidente_de_proveedor"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="ticket_externo" type="string"/>
+            <column name="estado" type="string"/>
+            <column name="abierto_en" type="date"/>
+            <column name="primera_respuesta_en" type="date"/>
+            <column name="resuelto_en" type="date"/>
+            <column name="cumplio_sla" type="boolean"/>
+            <column name="motivo_rechazo" type="string"/>
+            <column name="responsable_resuelto" type="string"/>
+            <column name="nivel_resuelto" type="string"/>
+            <column name="hubo_cobertura" type="boolean"/>
+            <column name="notas" type="string"/>
+            <column name="servicio_de_proveedor_id" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,90 @@
+{
+  "annotations": {
+    "changelogDate": "20231204224623"
+  },
+  "applications": ["oncall"],
+  "documentation": "Un tercero del que dependemos: nube, pasarela de pagos, correo.\\nLa zona horaria y la cobertura son lo que permite resolver quien\\nesta de guardia del lado de ellos en un instante dado.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    },
+    {
+      "fieldName": "tipo",
+      "fieldType": "TipoProveedor",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "NUBE,PAGOS,CORREO,CDN,OBSERVABILIDAD,OTRO"
+    },
+    {
+      "fieldName": "zonaHoraria",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "telefonoContacto",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "40"
+    },
+    {
+      "fieldName": "emailContacto",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "120"
+    },
+    {
+      "fieldName": "urlSoporte",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "500"
+    },
+    {
+      "fieldName": "urlEstado",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "500"
+    },
+    {
+      "fieldName": "cobertura",
+      "fieldType": "CoberturaProveedor",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "VEINTICUATRO_SIETE,HORARIO_HABIL,SOLO_CRITICO"
+    },
+    {
+      "fieldName": "slaRespuestaMinutos",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "10080",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "activo",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Proveedor",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "servicioDeProveedor",
+      "otherEntityRelationshipName": "proveedor",
+      "relationshipName": "servicio",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "contactoDeProveedor",
+      "otherEntityRelationshipName": "proveedor",
+      "relationshipName": "contacto",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

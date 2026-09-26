@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity ServicioDeProveedor.
+    -->
+    <changeSet id="20231204224923-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="proveedor_id"
+                                 baseTableName="servicio_de_proveedor"
+                                 constraintName="fk_servicio_de_proveedor__proveedor_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="proveedor"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="servicio_de_proveedor_id"
+                                 baseTableName="rel_servicio_de_proveedor__servicio_interno"
+                                 constraintName="fk_rel_servicio_de_proveedor__s__servicio_de_proveedor_8d_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="servicio_de_proveedor"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="servicio_interno_id"
+                                 baseTableName="rel_servicio_de_proveedor__servicio_interno"
+                                 constraintName="fk_rel_servicio_de_proveedor__s__servicio_interno_2e_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="servicio"
+                                 />
+    </changeSet>
+</databaseChangeLog>

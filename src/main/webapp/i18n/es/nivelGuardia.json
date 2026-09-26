@@ -1,0 +1,9 @@
+{
+  "oncallApp": {
+    "NivelGuardia": {
+      "null": "",
+      "PRIMARIO": "PRIMARIO",
+      "SECUNDARIO": "SECUNDARIO"
+    }
+  }
+}

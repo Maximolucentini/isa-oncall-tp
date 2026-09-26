@@ -1,0 +1,111 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (incidenteDeProveedor(); as incidenteDeProveedorRef) {
+      <div>
+        <h2 data-cy="incidenteDeProveedorDetailsHeading">
+          <span jhiTranslate="oncallApp.incidenteDeProveedor.detail.title">Incidente De Proveedor</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ incidenteDeProveedorRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.ticketExterno">Ticket Externo</span></dt>
+          <dd>
+            <span>{{ incidenteDeProveedorRef.ticketExterno }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.estado">Estado</span></dt>
+          <dd>
+            <span [jhiTranslate]="'oncallApp.EstadoTicketProveedor.' + (incidenteDeProveedorRef.estado ?? 'null')">{{
+              {
+                null: '',
+                ABIERTO: 'ABIERTO',
+                ESPERANDO_PROVEEDOR: 'ESPERANDO_PROVEEDOR',
+                RESUELTO: 'RESUELTO',
+                RECHAZADO: 'RECHAZADO',
+                CANCELADO: 'CANCELADO',
+              }[incidenteDeProveedorRef.estado ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.abiertoEn">Abierto En</span></dt>
+          <dd>
+            <span>{{ incidenteDeProveedorRef.abiertoEn | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.primeraRespuestaEn">Primera Respuesta En</span></dt>
+          <dd>
+            <span>{{ incidenteDeProveedorRef.primeraRespuestaEn | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.resueltoEn">Resuelto En</span></dt>
+          <dd>
+            <span>{{ incidenteDeProveedorRef.resueltoEn | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.cumplioSla">Cumplio Sla</span></dt>
+          <dd>
+            <span>{{ incidenteDeProveedorRef.cumplioSla }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.motivoRechazo">Motivo Rechazo</span></dt>
+          <dd>
+            <span>{{ incidenteDeProveedorRef.motivoRechazo }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.responsableResuelto">Responsable Resuelto</span></dt>
+          <dd>
+            <span>{{ incidenteDeProveedorRef.responsableResuelto }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.nivelResuelto">Nivel Resuelto</span></dt>
+          <dd>
+            <span [jhiTranslate]="'oncallApp.NivelGuardia.' + (incidenteDeProveedorRef.nivelResuelto ?? 'null')">{{
+              { null: '', PRIMARIO: 'PRIMARIO', SECUNDARIO: 'SECUNDARIO' }[incidenteDeProveedorRef.nivelResuelto ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.huboCobertura">Hubo Cobertura</span></dt>
+          <dd>
+            <span>{{ incidenteDeProveedorRef.huboCobertura }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.notas">Notas</span></dt>
+          <dd>
+            <span>{{ incidenteDeProveedorRef.notas }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.incidente">Incidente</span></dt>
+          <dd>
+            @if (incidenteDeProveedor()!.incidente) {
+              <div>
+                <a [routerLink]="['/incidente', incidenteDeProveedor()!.incidente?.id, 'view']">{{
+                  incidenteDeProveedorRef.incidente?.titulo
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.servicioDeProveedor">Servicio De Proveedor</span></dt>
+          <dd>
+            @if (incidenteDeProveedor()!.servicioDeProveedor) {
+              <div>
+                <a [routerLink]="['/servicio-de-proveedor', incidenteDeProveedor()!.servicioDeProveedor?.id, 'view']">{{
+                  incidenteDeProveedorRef.servicioDeProveedor?.nombre
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="oncallApp.incidenteDeProveedor.abiertoPor">Abierto Por</span></dt>
+          <dd>
+            <span>{{ incidenteDeProveedorRef.abiertoPor?.login }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/incidente-de-proveedor', incidenteDeProveedorRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,30 @@
+{
+  "oncallApp": {
+    "contactoDeProveedor": {
+      "home": {
+        "title": "Contacto De Proveedors",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Contacto De Proveedor",
+        "createOrEditLabel": "Crear o editar Contacto De Proveedor",
+        "notFound": "Ningún Contacto De Proveedors encontrado"
+      },
+      "created": "Un nuevo Contacto De Proveedor ha sido creado con el identificador {{ param }}",
+      "updated": "Un Contacto De Proveedor ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Contacto De Proveedor ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Contacto De Proveedor {{ id }}?"
+      },
+      "detail": {
+        "title": "Contacto De Proveedor"
+      },
+      "id": "ID",
+      "nombre": "Nombre",
+      "email": "Email",
+      "telefono": "Telefono",
+      "rol": "Rol",
+      "activo": "Activo",
+      "proveedor": "Proveedor",
+      "turno": "Turno"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+export enum CoberturaProveedor {
+  VEINTICUATRO_SIETE = 'VEINTICUATRO_SIETE',
+
+  HORARIO_HABIL = 'HORARIO_HABIL',
+
+  SOLO_CRITICO = 'SOLO_CRITICO',
+}

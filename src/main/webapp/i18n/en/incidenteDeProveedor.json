@@ -1,0 +1,37 @@
+{
+  "oncallApp": {
+    "incidenteDeProveedor": {
+      "home": {
+        "title": "Incidente De Proveedors",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Incidente De Proveedor",
+        "createOrEditLabel": "Create or edit a Incidente De Proveedor",
+        "notFound": "No Incidente De Proveedors found"
+      },
+      "created": "A new Incidente De Proveedor is created with identifier {{ param }}",
+      "updated": "A Incidente De Proveedor is updated with identifier {{ param }}",
+      "deleted": "A Incidente De Proveedor is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Incidente De Proveedor {{ id }}?"
+      },
+      "detail": {
+        "title": "Incidente De Proveedor"
+      },
+      "id": "ID",
+      "ticketExterno": "Ticket Externo",
+      "estado": "Estado",
+      "abiertoEn": "Abierto En",
+      "primeraRespuestaEn": "Primera Respuesta En",
+      "resueltoEn": "Resuelto En",
+      "cumplioSla": "Cumplio Sla",
+      "motivoRechazo": "Motivo Rechazo",
+      "responsableResuelto": "Responsable Resuelto",
+      "nivelResuelto": "Nivel Resuelto",
+      "huboCobertura": "Hubo Cobertura",
+      "notas": "Notas",
+      "incidente": "Incidente",
+      "servicioDeProveedor": "Servicio De Proveedor",
+      "abiertoPor": "Abierto Por"
+    }
+  }
+}

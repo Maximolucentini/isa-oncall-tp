@@ -1,0 +1,98 @@
+{
+  "annotations": {
+    "changelogDate": "20231204225023"
+  },
+  "applications": ["oncall"],
+  "documentation": "Ticket del lado del proveedor. Puede nacer sin incidente propio:\\nuna degradacion detectada que todavia no nos afecto.\\nLos campos *Resuelto congelan lo que respondio la regla C al abrirlo.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "ticketExterno",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "EstadoTicketProveedor",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ABIERTO,ESPERANDO_PROVEEDOR,RESUELTO,RECHAZADO,CANCELADO"
+    },
+    {
+      "fieldName": "abiertoEn",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "primeraRespuestaEn",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "resueltoEn",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "cumplioSla",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "motivoRechazo",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000"
+    },
+    {
+      "fieldName": "responsableResuelto",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    },
+    {
+      "fieldName": "nivelResuelto",
+      "fieldType": "NivelGuardia",
+      "fieldValues": "PRIMARIO,SECUNDARIO"
+    },
+    {
+      "fieldName": "huboCobertura",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "notas",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "4000"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "IncidenteDeProveedor",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "titulo",
+      "otherEntityName": "incidente",
+      "otherEntityRelationshipName": "incidenteDeProveedor",
+      "relationshipName": "incidente",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "servicioDeProveedor",
+      "otherEntityRelationshipName": "ticket",
+      "relationshipName": "servicioDeProveedor",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "abiertoPor",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

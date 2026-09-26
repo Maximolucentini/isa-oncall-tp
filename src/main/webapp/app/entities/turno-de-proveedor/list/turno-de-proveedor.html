@@ -1,0 +1,141 @@
+<div>
+  <h2 id="page-heading" data-cy="TurnoDeProveedorHeading">
+    <span jhiTranslate="oncallApp.turnoDeProveedor.home.title">Turno De Proveedors</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span jhiTranslate="oncallApp.turnoDeProveedor.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-turno-de-proveedor"
+        [routerLink]="['/turno-de-proveedor/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="oncallApp.turnoDeProveedor.home.createLabel">Crear nuevo Turno De Proveedor</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (turnoDeProveedors().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="oncallApp.turnoDeProveedor.home.notFound">Ningún Turno De Proveedors encontrado</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="desde">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.turnoDeProveedor.desde">Desde</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="hasta">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.turnoDeProveedor.hasta">Hasta</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nivel">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.turnoDeProveedor.nivel">Nivel</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="esReemplazo">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.turnoDeProveedor.esReemplazo">Es Reemplazo</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nota">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.turnoDeProveedor.nota">Nota</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="contacto.nombre">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.turnoDeProveedor.contacto">Contacto</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+          @for (turnoDeProveedor of turnoDeProveedors(); track trackId(turnoDeProveedor)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/turno-de-proveedor', turnoDeProveedor.id, 'view']">{{ turnoDeProveedor.id }}</a>
+              </td>
+              <td>{{ turnoDeProveedor.desde | formatMediumDatetime }}</td>
+              <td>{{ turnoDeProveedor.hasta | formatMediumDatetime }}</td>
+              <td [jhiTranslate]="'oncallApp.NivelGuardia.' + (turnoDeProveedor.nivel ?? 'null')">
+                {{ { null: '', PRIMARIO: 'PRIMARIO', SECUNDARIO: 'SECUNDARIO' }[turnoDeProveedor.nivel ?? 'null'] }}
+              </td>
+              <td>{{ turnoDeProveedor.esReemplazo }}</td>
+              <td>{{ turnoDeProveedor.nota }}</td>
+              <td>
+                @if (turnoDeProveedor.contacto) {
+                  <div>
+                    <a [routerLink]="['/contacto-de-proveedor', turnoDeProveedor.contacto.id, 'view']">{{
+                      turnoDeProveedor.contacto.nombre
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/turno-de-proveedor', turnoDeProveedor.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/turno-de-proveedor', turnoDeProveedor.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(turnoDeProveedor)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

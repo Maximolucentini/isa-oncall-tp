@@ -1,0 +1,71 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (servicioDeProveedor(); as servicioDeProveedorRef) {
+      <div>
+        <h2 data-cy="servicioDeProveedorDetailsHeading">
+          <span jhiTranslate="oncallApp.servicioDeProveedor.detail.title">Servicio De Proveedor</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ servicioDeProveedorRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.servicioDeProveedor.nombre">Nombre</span></dt>
+          <dd>
+            <span>{{ servicioDeProveedorRef.nombre }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.servicioDeProveedor.identificadorExterno">Identificador Externo</span></dt>
+          <dd>
+            <span>{{ servicioDeProveedorRef.identificadorExterno }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.servicioDeProveedor.descripcion">Descripcion</span></dt>
+          <dd>
+            <span>{{ servicioDeProveedorRef.descripcion }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.servicioDeProveedor.slaRespuestaMinutos">Sla Respuesta Minutos</span></dt>
+          <dd>
+            <span>{{ servicioDeProveedorRef.slaRespuestaMinutos }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.servicioDeProveedor.activo">Activo</span></dt>
+          <dd>
+            <span>{{ servicioDeProveedorRef.activo }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.servicioDeProveedor.proveedor">Proveedor</span></dt>
+          <dd>
+            @if (servicioDeProveedor()!.proveedor) {
+              <div>
+                <a [routerLink]="['/proveedor', servicioDeProveedor()!.proveedor?.id, 'view']">{{
+                  servicioDeProveedorRef.proveedor?.nombre
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="oncallApp.servicioDeProveedor.servicioInterno">Servicio Interno</span></dt>
+          <dd>
+            @for (servicioInterno of servicioDeProveedorRef.servicioInternos; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/servicio', servicioInterno.id, 'view']">{{ servicioInterno?.nombre }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/servicio-de-proveedor', servicioDeProveedorRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

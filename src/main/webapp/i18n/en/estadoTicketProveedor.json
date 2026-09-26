@@ -1,0 +1,12 @@
+{
+  "oncallApp": {
+    "EstadoTicketProveedor": {
+      "null": "",
+      "ABIERTO": "ABIERTO",
+      "ESPERANDO_PROVEEDOR": "ESPERANDO_PROVEEDOR",
+      "RESUELTO": "RESUELTO",
+      "RECHAZADO": "RECHAZADO",
+      "CANCELADO": "CANCELADO"
+    }
+  }
+}

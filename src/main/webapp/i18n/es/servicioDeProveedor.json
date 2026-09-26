@@ -1,0 +1,31 @@
+{
+  "oncallApp": {
+    "servicioDeProveedor": {
+      "home": {
+        "title": "Servicio De Proveedors",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Servicio De Proveedor",
+        "createOrEditLabel": "Crear o editar Servicio De Proveedor",
+        "notFound": "Ningún Servicio De Proveedors encontrado"
+      },
+      "created": "Un nuevo Servicio De Proveedor ha sido creado con el identificador {{ param }}",
+      "updated": "Un Servicio De Proveedor ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Servicio De Proveedor ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Servicio De Proveedor {{ id }}?"
+      },
+      "detail": {
+        "title": "Servicio De Proveedor"
+      },
+      "id": "ID",
+      "nombre": "Nombre",
+      "identificadorExterno": "Identificador Externo",
+      "descripcion": "Descripcion",
+      "slaRespuestaMinutos": "Sla Respuesta Minutos",
+      "activo": "Activo",
+      "proveedor": "Proveedor",
+      "servicioInterno": "Servicio Interno",
+      "ticket": "Ticket"
+    }
+  }
+}

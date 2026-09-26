@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (turnoDeProveedor(); as turnoDeProveedorRef) {
+      <div>
+        <h2 data-cy="turnoDeProveedorDetailsHeading">
+          <span jhiTranslate="oncallApp.turnoDeProveedor.detail.title">Turno De Proveedor</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ turnoDeProveedorRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.turnoDeProveedor.desde">Desde</span></dt>
+          <dd>
+            <span>{{ turnoDeProveedorRef.desde | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.turnoDeProveedor.hasta">Hasta</span></dt>
+          <dd>
+            <span>{{ turnoDeProveedorRef.hasta | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.turnoDeProveedor.nivel">Nivel</span></dt>
+          <dd>
+            <span [jhiTranslate]="'oncallApp.NivelGuardia.' + (turnoDeProveedorRef.nivel ?? 'null')">{{
+              { null: '', PRIMARIO: 'PRIMARIO', SECUNDARIO: 'SECUNDARIO' }[turnoDeProveedorRef.nivel ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.turnoDeProveedor.esReemplazo">Es Reemplazo</span></dt>
+          <dd>
+            <span>{{ turnoDeProveedorRef.esReemplazo }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.turnoDeProveedor.nota">Nota</span></dt>
+          <dd>
+            <span>{{ turnoDeProveedorRef.nota }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.turnoDeProveedor.contacto">Contacto</span></dt>
+          <dd>
+            @if (turnoDeProveedor()!.contacto) {
+              <div>
+                <a [routerLink]="['/contacto-de-proveedor', turnoDeProveedor()!.contacto?.id, 'view']">{{
+                  turnoDeProveedorRef.contacto?.nombre
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/turno-de-proveedor', turnoDeProveedorRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,245 @@
+<div>
+  <h2 id="page-heading" data-cy="IncidenteDeProveedorHeading">
+    <span jhiTranslate="oncallApp.incidenteDeProveedor.home.title">Incidente De Proveedors</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span jhiTranslate="oncallApp.incidenteDeProveedor.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-incidente-de-proveedor"
+        [routerLink]="['/incidente-de-proveedor/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="oncallApp.incidenteDeProveedor.home.createLabel">Crear nuevo Incidente De Proveedor</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  <jhi-filter [filters]="filters" />
+
+  @if (incidenteDeProveedors().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="oncallApp.incidenteDeProveedor.home.notFound">Ningún Incidente De Proveedors encontrado</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="ticketExterno">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.ticketExterno">Ticket Externo</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="estado">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.estado">Estado</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="abiertoEn">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.abiertoEn">Abierto En</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="primeraRespuestaEn">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.primeraRespuestaEn">Primera Respuesta En</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="resueltoEn">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.resueltoEn">Resuelto En</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="cumplioSla">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.cumplioSla">Cumplio Sla</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="motivoRechazo">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.motivoRechazo">Motivo Rechazo</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="responsableResuelto">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.responsableResuelto">Responsable Resuelto</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nivelResuelto">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.nivelResuelto">Nivel Resuelto</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="huboCobertura">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.huboCobertura">Hubo Cobertura</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="notas">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.notas">Notas</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="incidente.titulo">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.incidente">Incidente</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="servicioDeProveedor.nombre">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.servicioDeProveedor">Servicio De Proveedor</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="abiertoPor.login">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.incidenteDeProveedor.abiertoPor">Abierto Por</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (incidenteDeProveedor of incidenteDeProveedors(); track trackId(incidenteDeProveedor)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/incidente-de-proveedor', incidenteDeProveedor.id, 'view']">{{ incidenteDeProveedor.id }}</a>
+              </td>
+              <td>{{ incidenteDeProveedor.ticketExterno }}</td>
+              <td [jhiTranslate]="'oncallApp.EstadoTicketProveedor.' + (incidenteDeProveedor.estado ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    ABIERTO: 'ABIERTO',
+                    ESPERANDO_PROVEEDOR: 'ESPERANDO_PROVEEDOR',
+                    RESUELTO: 'RESUELTO',
+                    RECHAZADO: 'RECHAZADO',
+                    CANCELADO: 'CANCELADO',
+                  }[incidenteDeProveedor.estado ?? 'null']
+                }}
+              </td>
+              <td>{{ incidenteDeProveedor.abiertoEn | formatMediumDatetime }}</td>
+              <td>{{ incidenteDeProveedor.primeraRespuestaEn | formatMediumDatetime }}</td>
+              <td>{{ incidenteDeProveedor.resueltoEn | formatMediumDatetime }}</td>
+              <td>{{ incidenteDeProveedor.cumplioSla }}</td>
+              <td>{{ incidenteDeProveedor.motivoRechazo }}</td>
+              <td>{{ incidenteDeProveedor.responsableResuelto }}</td>
+              <td [jhiTranslate]="'oncallApp.NivelGuardia.' + (incidenteDeProveedor.nivelResuelto ?? 'null')">
+                {{ { null: '', PRIMARIO: 'PRIMARIO', SECUNDARIO: 'SECUNDARIO' }[incidenteDeProveedor.nivelResuelto ?? 'null'] }}
+              </td>
+              <td>{{ incidenteDeProveedor.huboCobertura }}</td>
+              <td>{{ incidenteDeProveedor.notas }}</td>
+              <td>
+                @if (incidenteDeProveedor.incidente) {
+                  <div>
+                    <a [routerLink]="['/incidente', incidenteDeProveedor.incidente.id, 'view']">{{
+                      incidenteDeProveedor.incidente.titulo
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (incidenteDeProveedor.servicioDeProveedor) {
+                  <div>
+                    <a [routerLink]="['/servicio-de-proveedor', incidenteDeProveedor.servicioDeProveedor.id, 'view']">{{
+                      incidenteDeProveedor.servicioDeProveedor.nombre
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                {{ incidenteDeProveedor.abiertoPor?.login }}
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/incidente-de-proveedor', incidenteDeProveedor.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/incidente-de-proveedor', incidenteDeProveedor.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(incidenteDeProveedor)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (incidenteDeProveedors().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,315 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-incidente-de-proveedor-heading"
+        data-cy="IncidenteDeProveedorCreateUpdateHeading"
+        jhiTranslate="oncallApp.incidenteDeProveedor.home.createOrEditLabel"
+      >
+        Crear o editar Incidente De Proveedor
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let ticketExternoRef = editForm.get('ticketExterno')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_ticketExterno" jhiTranslate="oncallApp.incidenteDeProveedor.ticketExterno"
+            >Ticket Externo</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="ticketExterno"
+            id="field_ticketExterno"
+            data-cy="ticketExterno"
+            formControlName="ticketExterno"
+          />
+          @if (ticketExternoRef.invalid && (ticketExternoRef.dirty || ticketExternoRef.touched)) {
+            <div>
+              @if (ticketExternoRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >Este campo no puede superar más de 100 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let estadoRef = editForm.get('estado')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_estado" jhiTranslate="oncallApp.incidenteDeProveedor.estado">Estado</label>
+          <select class="form-control" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
+            <option [ngValue]="null">{{ 'oncallApp.EstadoTicketProveedor.null' | translate }}</option>
+            @for (estadoTicketProveedor of estadoTicketProveedorValues; track $index) {
+              <option [value]="estadoTicketProveedor">{{ 'oncallApp.EstadoTicketProveedor.' + estadoTicketProveedor | translate }}</option>
+            }
+          </select>
+          @if (estadoRef.invalid && (estadoRef.dirty || estadoRef.touched)) {
+            <div>
+              @if (estadoRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let abiertoEnRef = editForm.get('abiertoEn')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_abiertoEn" jhiTranslate="oncallApp.incidenteDeProveedor.abiertoEn">Abierto En</label>
+          <div class="d-flex">
+            <input
+              id="field_abiertoEn"
+              data-cy="abiertoEn"
+              type="datetime-local"
+              class="form-control"
+              name="abiertoEn"
+              formControlName="abiertoEn"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (abiertoEnRef.invalid && (abiertoEnRef.dirty || abiertoEnRef.touched)) {
+            <div>
+              @if (abiertoEnRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!abiertoEnRef.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >Este campo debe ser una fecha y hora.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_primeraRespuestaEn" jhiTranslate="oncallApp.incidenteDeProveedor.primeraRespuestaEn"
+            >Primera Respuesta En</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_primeraRespuestaEn"
+              data-cy="primeraRespuestaEn"
+              type="datetime-local"
+              class="form-control"
+              name="primeraRespuestaEn"
+              formControlName="primeraRespuestaEn"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_resueltoEn" jhiTranslate="oncallApp.incidenteDeProveedor.resueltoEn">Resuelto En</label>
+          <div class="d-flex">
+            <input
+              id="field_resueltoEn"
+              data-cy="resueltoEn"
+              type="datetime-local"
+              class="form-control"
+              name="resueltoEn"
+              formControlName="resueltoEn"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_cumplioSla" jhiTranslate="oncallApp.incidenteDeProveedor.cumplioSla">Cumplio Sla</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="cumplioSla"
+            id="field_cumplioSla"
+            data-cy="cumplioSla"
+            formControlName="cumplioSla"
+          />
+        </div>
+
+        @let motivoRechazoRef = editForm.get('motivoRechazo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_motivoRechazo" jhiTranslate="oncallApp.incidenteDeProveedor.motivoRechazo"
+            >Motivo Rechazo</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="motivoRechazo"
+            id="field_motivoRechazo"
+            data-cy="motivoRechazo"
+            formControlName="motivoRechazo"
+          />
+          @if (motivoRechazoRef.invalid && (motivoRechazoRef.dirty || motivoRechazoRef.touched)) {
+            <div>
+              @if (motivoRechazoRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '1000' }"
+                  >Este campo no puede superar más de 1000 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let responsableResueltoRef = editForm.get('responsableResuelto')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_responsableResuelto" jhiTranslate="oncallApp.incidenteDeProveedor.responsableResuelto"
+            >Responsable Resuelto</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responsableResuelto"
+            id="field_responsableResuelto"
+            data-cy="responsableResuelto"
+            formControlName="responsableResuelto"
+          />
+          @if (responsableResueltoRef.invalid && (responsableResueltoRef.dirty || responsableResueltoRef.touched)) {
+            <div>
+              @if (responsableResueltoRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >Este campo no puede superar más de 100 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_nivelResuelto" jhiTranslate="oncallApp.incidenteDeProveedor.nivelResuelto"
+            >Nivel Resuelto</label
+          >
+          <select
+            class="form-control"
+            name="nivelResuelto"
+            formControlName="nivelResuelto"
+            id="field_nivelResuelto"
+            data-cy="nivelResuelto"
+          >
+            <option [ngValue]="null">{{ 'oncallApp.NivelGuardia.null' | translate }}</option>
+            @for (nivelGuardia of nivelGuardiaValues; track $index) {
+              <option [value]="nivelGuardia">{{ 'oncallApp.NivelGuardia.' + nivelGuardia | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_huboCobertura" jhiTranslate="oncallApp.incidenteDeProveedor.huboCobertura"
+            >Hubo Cobertura</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="huboCobertura"
+            id="field_huboCobertura"
+            data-cy="huboCobertura"
+            formControlName="huboCobertura"
+          />
+        </div>
+
+        @let notasRef = editForm.get('notas')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_notas" jhiTranslate="oncallApp.incidenteDeProveedor.notas">Notas</label>
+          <input type="text" class="form-control" name="notas" id="field_notas" data-cy="notas" formControlName="notas" />
+          @if (notasRef.invalid && (notasRef.dirty || notasRef.touched)) {
+            <div>
+              @if (notasRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '4000' }"
+                  >Este campo no puede superar más de 4000 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_incidente" jhiTranslate="oncallApp.incidenteDeProveedor.incidente">Incidente</label>
+          <select
+            class="form-control"
+            id="field_incidente"
+            data-cy="incidente"
+            name="incidente"
+            formControlName="incidente"
+            [compareWith]="compareIncidente"
+          >
+            <option [ngValue]="null"></option>
+            @for (incidenteOption of incidentesSharedCollection(); track $index) {
+              <option [ngValue]="incidenteOption">{{ incidenteOption.titulo }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_servicioDeProveedor" jhiTranslate="oncallApp.incidenteDeProveedor.servicioDeProveedor"
+            >Servicio De Proveedor</label
+          >
+          <select
+            class="form-control"
+            id="field_servicioDeProveedor"
+            data-cy="servicioDeProveedor"
+            name="servicioDeProveedor"
+            formControlName="servicioDeProveedor"
+            [compareWith]="compareServicioDeProveedor"
+          >
+            @if (editForm.get(['servicioDeProveedor'])!.value === null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (servicioDeProveedorOption of servicioDeProveedorsSharedCollection(); track $index) {
+              <option [ngValue]="servicioDeProveedorOption">{{ servicioDeProveedorOption.nombre }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['servicioDeProveedor'])!.invalid &&
+          (editForm.get(['servicioDeProveedor'])!.dirty || editForm.get(['servicioDeProveedor'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['servicioDeProveedor'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_abiertoPor" jhiTranslate="oncallApp.incidenteDeProveedor.abiertoPor">Abierto Por</label>
+          <select
+            class="form-control"
+            id="field_abiertoPor"
+            data-cy="abiertoPor"
+            name="abiertoPor"
+            formControlName="abiertoPor"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            @for (userOption of usersSharedCollection(); track $index) {
+              <option [ngValue]="userOption">{{ userOption.login }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

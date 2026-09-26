@@ -1,0 +1,29 @@
+{
+  "oncallApp": {
+    "turnoDeProveedor": {
+      "home": {
+        "title": "Turno De Proveedors",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Turno De Proveedor",
+        "createOrEditLabel": "Crear o editar Turno De Proveedor",
+        "notFound": "Ningún Turno De Proveedors encontrado"
+      },
+      "created": "Un nuevo Turno De Proveedor ha sido creado con el identificador {{ param }}",
+      "updated": "Un Turno De Proveedor ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Turno De Proveedor ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Turno De Proveedor {{ id }}?"
+      },
+      "detail": {
+        "title": "Turno De Proveedor"
+      },
+      "id": "ID",
+      "desde": "Desde",
+      "hasta": "Hasta",
+      "nivel": "Nivel",
+      "esReemplazo": "Es Reemplazo",
+      "nota": "Nota",
+      "contacto": "Contacto"
+    }
+  }
+}

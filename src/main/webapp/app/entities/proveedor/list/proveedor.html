@@ -1,0 +1,202 @@
+<div>
+  <h2 id="page-heading" data-cy="ProveedorHeading">
+    <span jhiTranslate="oncallApp.proveedor.home.title">Proveedors</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span jhiTranslate="oncallApp.proveedor.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-proveedor"
+        [routerLink]="['/proveedor/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="oncallApp.proveedor.home.createLabel">Crear nuevo Proveedor</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (proveedors().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="oncallApp.proveedor.home.notFound">Ningún Proveedors encontrado</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nombre">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.proveedor.nombre">Nombre</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="tipo">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.proveedor.tipo">Tipo</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="zonaHoraria">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.proveedor.zonaHoraria">Zona Horaria</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="telefonoContacto">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.proveedor.telefonoContacto">Telefono Contacto</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="emailContacto">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.proveedor.emailContacto">Email Contacto</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="urlSoporte">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.proveedor.urlSoporte">Url Soporte</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="urlEstado">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.proveedor.urlEstado">Url Estado</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="cobertura">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.proveedor.cobertura">Cobertura</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="slaRespuestaMinutos">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.proveedor.slaRespuestaMinutos">Sla Respuesta Minutos</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="activo">
+              <div class="d-flex">
+                <span jhiTranslate="oncallApp.proveedor.activo">Activo</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (proveedor of proveedors(); track trackId(proveedor)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/proveedor', proveedor.id, 'view']">{{ proveedor.id }}</a>
+              </td>
+              <td>{{ proveedor.nombre }}</td>
+              <td [jhiTranslate]="'oncallApp.TipoProveedor.' + (proveedor.tipo ?? 'null')">
+                {{
+                  { null: '', NUBE: 'NUBE', PAGOS: 'PAGOS', CORREO: 'CORREO', CDN: 'CDN', OBSERVABILIDAD: 'OBSERVABILIDAD', OTRO: 'OTRO' }[
+                    proveedor.tipo ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>{{ proveedor.zonaHoraria }}</td>
+              <td>{{ proveedor.telefonoContacto }}</td>
+              <td>{{ proveedor.emailContacto }}</td>
+              <td>{{ proveedor.urlSoporte }}</td>
+              <td>{{ proveedor.urlEstado }}</td>
+              <td [jhiTranslate]="'oncallApp.CoberturaProveedor.' + (proveedor.cobertura ?? 'null')">
+                {{
+                  { null: '', VEINTICUATRO_SIETE: 'VEINTICUATRO_SIETE', HORARIO_HABIL: 'HORARIO_HABIL', SOLO_CRITICO: 'SOLO_CRITICO' }[
+                    proveedor.cobertura ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>{{ proveedor.slaRespuestaMinutos }}</td>
+              <td>{{ proveedor.activo }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <button
+                    type="submit"
+                    [routerLink]="['/servicio-de-proveedor']"
+                    [queryParams]="{ 'filter[proveedorId.in]': proveedor.id }"
+                    class="btn btn-info btn-sm"
+                    data-cy="filterOtherEntityButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span
+                      class="d-none d-md-inline"
+                      jhiTranslate="entity.action.show"
+                      [translateValues]="{ otherEntity: ('oncallApp.proveedor.servicio' | translate) }"
+                      >Show Servicio</span
+                    >
+                  </button>
+                  <a [routerLink]="['/proveedor', proveedor.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  </a>
+
+                  <a [routerLink]="['/proveedor', proveedor.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(proveedor)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (proveedors().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

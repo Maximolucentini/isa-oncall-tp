@@ -1,0 +1,53 @@
+{
+  "annotations": {
+    "changelogDate": "20231204224823"
+  },
+  "applications": ["oncall"],
+  "documentation": "La guardia del proveedor. Entidad propia y no una Rotacion, porque\\nuna rotacion pertenece siempre a un Equipo y esta no tiene ninguno.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "desde",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "hasta",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nivel",
+      "fieldType": "NivelGuardia",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PRIMARIO,SECUNDARIO"
+    },
+    {
+      "fieldName": "esReemplazo",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nota",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "500"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "TurnoDeProveedor",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "contactoDeProveedor",
+      "otherEntityRelationshipName": "turno",
+      "relationshipName": "contacto",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}
