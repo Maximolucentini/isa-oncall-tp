@@ -1,0 +1,367 @@
+
+==================== Escenario
+Proveedor=1001  Ana=1051  Beto=1052  ServicioDeProveedor=1101
+Turnos (UTC): Ana P [00:00,09:00) · Beto P [08:30,17:00) · Beto S [00:00,24:00) · Ana P reemplazo [12:00,13:00)
+
+==================== 1. Turno simple (06:00Z): Ana primaria
+GET /oncall/proveedores/1001/guardia?instante=2026-11-05T06:00:00Z  ->  HTTP 200
+{
+  "proveedorId": 1001,
+  "proveedorNombre": "Nube Demo 1793910527",
+  "instante": "2026-11-05T06:00:00Z",
+  "instanteLocal": "2026-11-05T01:00-05:00",
+  "zonaHorariaUsada": "America/New_York",
+  "estado": "CUBIERTO",
+  "motivo": null,
+  "responsable": {
+    "contactoId": 1051,
+    "nombre": "Ana",
+    "email": "ana@nube.example",
+    "telefono": null,
+    "turnoId": 1151,
+    "esReemplazo": false
+  },
+  "nivelResponsable": "PRIMARIO",
+  "primario": {
+    "contactoId": 1051,
+    "nombre": "Ana",
+    "email": "ana@nube.example",
+    "telefono": null,
+    "turnoId": 1151,
+    "esReemplazo": false
+  },
+  "secundario": {
+    "contactoId": 1052,
+    "nombre": "Beto",
+    "email": "beto@nube.example",
+    "telefono": null,
+    "turnoId": 1153,
+    "esReemplazo": false
+  },
+  "turnosVigentesPrimario": 1,
+  "turnosVigentesSecundario": 1,
+  "dentroDeCoberturaContractual": false,
+  "contactoGeneral": {
+    "telefono": "+1 555 0100",
+    "email": "soporte@nube.example",
+    "urlSoporte": "https://nube.example/soporte"
+  }
+}
+
+==================== 2. Superposición (08:45Z): gana Beto, que empezó más tarde; turnosVigentesPrimario=2
+GET /oncall/proveedores/1001/guardia?instante=2026-11-05T08:45:00Z  ->  HTTP 200
+{
+  "proveedorId": 1001,
+  "proveedorNombre": "Nube Demo 1793910527",
+  "instante": "2026-11-05T08:45:00Z",
+  "instanteLocal": "2026-11-05T03:45-05:00",
+  "zonaHorariaUsada": "America/New_York",
+  "estado": "CUBIERTO",
+  "motivo": null,
+  "responsable": {
+    "contactoId": 1052,
+    "nombre": "Beto",
+    "email": "beto@nube.example",
+    "telefono": null,
+    "turnoId": 1152,
+    "esReemplazo": false
+  },
+  "nivelResponsable": "PRIMARIO",
+  "primario": {
+    "contactoId": 1052,
+    "nombre": "Beto",
+    "email": "beto@nube.example",
+    "telefono": null,
+    "turnoId": 1152,
+    "esReemplazo": false
+  },
+  "secundario": {
+    "contactoId": 1052,
+    "nombre": "Beto",
+    "email": "beto@nube.example",
+    "telefono": null,
+    "turnoId": 1153,
+    "esReemplazo": false
+  },
+  "turnosVigentesPrimario": 2,
+  "turnosVigentesSecundario": 1,
+  "dentroDeCoberturaContractual": false,
+  "contactoGeneral": {
+    "telefono": "+1 555 0100",
+    "email": "soporte@nube.example",
+    "urlSoporte": "https://nube.example/soporte"
+  }
+}
+
+==================== 3. Reemplazo (12:30Z): Ana pisa a Beto mientras dura el reemplazo
+GET /oncall/proveedores/1001/guardia?instante=2026-11-05T12:30:00Z  ->  HTTP 200
+{
+  "proveedorId": 1001,
+  "proveedorNombre": "Nube Demo 1793910527",
+  "instante": "2026-11-05T12:30:00Z",
+  "instanteLocal": "2026-11-05T07:30-05:00",
+  "zonaHorariaUsada": "America/New_York",
+  "estado": "CUBIERTO",
+  "motivo": null,
+  "responsable": {
+    "contactoId": 1051,
+    "nombre": "Ana",
+    "email": "ana@nube.example",
+    "telefono": null,
+    "turnoId": 1154,
+    "esReemplazo": true
+  },
+  "nivelResponsable": "PRIMARIO",
+  "primario": {
+    "contactoId": 1051,
+    "nombre": "Ana",
+    "email": "ana@nube.example",
+    "telefono": null,
+    "turnoId": 1154,
+    "esReemplazo": true
+  },
+  "secundario": {
+    "contactoId": 1052,
+    "nombre": "Beto",
+    "email": "beto@nube.example",
+    "telefono": null,
+    "turnoId": 1153,
+    "esReemplazo": false
+  },
+  "turnosVigentesPrimario": 2,
+  "turnosVigentesSecundario": 1,
+  "dentroDeCoberturaContractual": false,
+  "contactoGeneral": {
+    "telefono": "+1 555 0100",
+    "email": "soporte@nube.example",
+    "urlSoporte": "https://nube.example/soporte"
+  }
+}
+
+==================== 4. Solo secundario (20:00Z): cubre Beto como SECUNDARIO (15:00 en Nueva York: dentro de horario hábil)
+GET /oncall/proveedores/1001/guardia?instante=2026-11-05T20:00:00Z  ->  HTTP 200
+{
+  "proveedorId": 1001,
+  "proveedorNombre": "Nube Demo 1793910527",
+  "instante": "2026-11-05T20:00:00Z",
+  "instanteLocal": "2026-11-05T15:00-05:00",
+  "zonaHorariaUsada": "America/New_York",
+  "estado": "CUBIERTO",
+  "motivo": null,
+  "responsable": {
+    "contactoId": 1052,
+    "nombre": "Beto",
+    "email": "beto@nube.example",
+    "telefono": null,
+    "turnoId": 1153,
+    "esReemplazo": false
+  },
+  "nivelResponsable": "SECUNDARIO",
+  "primario": null,
+  "secundario": {
+    "contactoId": 1052,
+    "nombre": "Beto",
+    "email": "beto@nube.example",
+    "telefono": null,
+    "turnoId": 1153,
+    "esReemplazo": false
+  },
+  "turnosVigentesPrimario": 0,
+  "turnosVigentesSecundario": 1,
+  "dentroDeCoberturaContractual": true,
+  "contactoGeneral": {
+    "telefono": "+1 555 0100",
+    "email": "soporte@nube.example",
+    "urlSoporte": "https://nube.example/soporte"
+  }
+}
+
+==================== 5. Pidiendo nivel=PRIMARIO (20:00Z): SIN_COBERTURA, no se cae al secundario
+GET /oncall/proveedores/1001/guardia?instante=2026-11-05T20:00:00Z&nivel=PRIMARIO  ->  HTTP 200
+{
+  "proveedorId": 1001,
+  "proveedorNombre": "Nube Demo 1793910527",
+  "instante": "2026-11-05T20:00:00Z",
+  "instanteLocal": "2026-11-05T15:00-05:00",
+  "zonaHorariaUsada": "America/New_York",
+  "estado": "SIN_COBERTURA",
+  "motivo": "SIN_TURNOS",
+  "responsable": null,
+  "nivelResponsable": null,
+  "primario": null,
+  "secundario": {
+    "contactoId": 1052,
+    "nombre": "Beto",
+    "email": "beto@nube.example",
+    "telefono": null,
+    "turnoId": 1153,
+    "esReemplazo": false
+  },
+  "turnosVigentesPrimario": 0,
+  "turnosVigentesSecundario": 1,
+  "dentroDeCoberturaContractual": true,
+  "contactoGeneral": {
+    "telefono": "+1 555 0100",
+    "email": "soporte@nube.example",
+    "urlSoporte": "https://nube.example/soporte"
+  }
+}
+
+==================== 6. Hueco total (sábado 2026-11-07T12:00Z): 200 SIN_COBERTURA, contacto general, fuera de horario hábil
+GET /oncall/proveedores/1001/guardia?instante=2026-11-07T12:00:00Z  ->  HTTP 200
+{
+  "proveedorId": 1001,
+  "proveedorNombre": "Nube Demo 1793910527",
+  "instante": "2026-11-07T12:00:00Z",
+  "instanteLocal": "2026-11-07T07:00-05:00",
+  "zonaHorariaUsada": "America/New_York",
+  "estado": "SIN_COBERTURA",
+  "motivo": "SIN_TURNOS",
+  "responsable": null,
+  "nivelResponsable": null,
+  "primario": null,
+  "secundario": null,
+  "turnosVigentesPrimario": 0,
+  "turnosVigentesSecundario": 0,
+  "dentroDeCoberturaContractual": false,
+  "contactoGeneral": {
+    "telefono": "+1 555 0100",
+    "email": "soporte@nube.example",
+    "urlSoporte": "https://nube.example/soporte"
+  }
+}
+
+==================== 7. Apertura de ticket ahora: congela la guardia y aplica el SLA del servicio (15)
+{
+  "ticket": {
+    "abiertoEn": "2026-11-05T20:28:51.258722985Z",
+    "abiertoPor": {
+      "id": 1,
+      "login": "admin"
+    },
+    "cumplioSla": null,
+    "estado": "ABIERTO",
+    "huboCobertura": true,
+    "id": 1201,
+    "incidente": null,
+    "motivoRechazo": null,
+    "nivelResuelto": "PRIMARIO",
+    "notas": null,
+    "primeraRespuestaEn": null,
+    "responsableResuelto": "Ana",
+    "resueltoEn": null,
+    "servicioDeProveedor": {
+      "activo": null,
+      "descripcion": null,
+      "id": 1101,
+      "identificadorExterno": null,
+      "nombre": "Compute",
+      "proveedor": null,
+      "servicioInternos": [],
+      "slaRespuestaMinutos": null
+    },
+    "ticketExterno": "CASE-1793910527"
+  },
+  "guardia": {
+    "proveedorId": 1001,
+    "proveedorNombre": "Nube Demo 1793910527",
+    "instante": "2026-11-05T20:28:51.258722985Z",
+    "instanteLocal": "2026-11-05T15:28:51.258722985-05:00",
+    "zonaHorariaUsada": "America/New_York",
+    "estado": "CUBIERTO",
+    "motivo": null,
+    "responsable": {
+      "contactoId": 1051,
+      "nombre": "Ana",
+      "email": "ana@nube.example",
+      "telefono": null,
+      "turnoId": 1155,
+      "esReemplazo": true
+    },
+    "nivelResponsable": "PRIMARIO",
+    "primario": {
+      "contactoId": 1051,
+      "nombre": "Ana",
+      "email": "ana@nube.example",
+      "telefono": null,
+      "turnoId": 1155,
+      "esReemplazo": true
+    },
+    "secundario": {
+      "contactoId": 1052,
+      "nombre": "Beto",
+      "email": "beto@nube.example",
+      "telefono": null,
+      "turnoId": 1153,
+      "esReemplazo": false
+    },
+    "turnosVigentesPrimario": 1,
+    "turnosVigentesSecundario": 1,
+    "dentroDeCoberturaContractual": true,
+    "contactoGeneral": {
+      "telefono": "+1 555 0100",
+      "email": "soporte@nube.example",
+      "urlSoporte": "https://nube.example/soporte"
+    }
+  },
+  "slaAplicableMinutos": 15
+}
+
+==================== 8. Se borra el turno de Ana y se relee el ticket: responsableResuelto no cambia
+GET /incidente-de-proveedors/1201  ->  HTTP 200
+{
+  "abiertoEn": "2026-11-05T20:28:51.258723Z",
+  "abiertoPor": {
+    "id": 1,
+    "login": "admin"
+  },
+  "cumplioSla": null,
+  "estado": "ABIERTO",
+  "huboCobertura": true,
+  "id": 1201,
+  "incidente": null,
+  "motivoRechazo": null,
+  "nivelResuelto": "PRIMARIO",
+  "notas": null,
+  "primeraRespuestaEn": null,
+  "responsableResuelto": "Ana",
+  "resueltoEn": null,
+  "servicioDeProveedor": {
+    "activo": null,
+    "descripcion": null,
+    "id": 1101,
+    "identificadorExterno": null,
+    "nombre": "Compute",
+    "proveedor": null,
+    "servicioInternos": [],
+    "slaRespuestaMinutos": null
+  },
+  "ticketExterno": "CASE-1793910527"
+}
+
+==================== 9. Errores: proveedor inexistente (404), instante mal formado (400), servicio inexistente (404)
+GET /oncall/proveedores/999999999/guardia  ->  HTTP 404
+{
+  "detail": "Proveedor 999999999 no existe",
+  "instance": "/api/oncall/proveedores/999999999/guardia",
+  "status": 404,
+  "type": "https://www.jhipster.tech/problem/problem-with-message",
+  "message": "error.http.404",
+  "path": "/api/oncall/proveedores/999999999/guardia"
+}
+GET /oncall/proveedores/1001/guardia?instante=ayer  ->  HTTP 400
+{
+  "detail": "Failed to convert 'instante' with value: 'ayer'",
+  "instance": "/api/oncall/proveedores/1001/guardia",
+  "status": 400,
+  "title": "Bad Request"
+}
+POST /oncall/incidentes-de-proveedor/abrir  ->  HTTP 404
+{
+  "detail": "ServicioDeProveedor 999999999 no existe",
+  "instance": "/api/oncall/incidentes-de-proveedor/abrir",
+  "status": 404,
+  "type": "https://www.jhipster.tech/problem/problem-with-message",
+  "message": "error.http.404",
+  "path": "/api/oncall/incidentes-de-proveedor/abrir"
+}
