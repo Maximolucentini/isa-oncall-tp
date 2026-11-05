@@ -13,7 +13,8 @@ Extensión individual: **Proveedores externos** (regla C del lado del proveedor)
 
 - Backend: `./mvnw` (puerto 8080) · Frontend: `npm start` (puerto 4200)
 - Base: `docker compose -f src/main/docker/postgresql.yml up -d`
-- Tests de la regla: `./mvnw test -Dtest='GuardiaProveedor*'`
+- Tests unitarios de la regla: `./mvnw test -Dtest=ResolutorDeGuardiaTest`
+- Tests de integración de la regla (necesita Docker): `./mvnw verify -Dtest=ResolutorDeGuardiaTest -Dit.test=GuardiaProveedorResourceIT`
 - Estructura de capas: `./mvnw test -Dtest=TechnicalStructureTest`
 - No corras `jhipster jdl` salvo pedido explícito.
 
